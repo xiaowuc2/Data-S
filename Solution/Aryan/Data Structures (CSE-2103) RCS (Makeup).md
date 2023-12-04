@@ -954,8 +954,11 @@ Properties of a B-tree:
 ```
 
 ```
-### 2-3-4 tree 
-A 2-3-4 tree is a type of self-balancing search tree data structure where each internal node can have 2, 3, or 4 children. The numbers in the name represent the possible number of children each internal node can have. This tree structure is designed to maintain balance during insertions and deletions, ensuring efficient search operations.
+### 2-3-4 tree
+
+A 2-3-4 tree is a type of self-balancing search tree data structure where each internal node can have 2, 3, or 4 children.
+The numbers in the name represent the possible number of children each internal node can have. This tree structure is designed
+to maintain balance during insertions and deletions, ensuring efficient search operations.
 
 ```
 ---
