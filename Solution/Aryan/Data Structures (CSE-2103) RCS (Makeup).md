@@ -67,10 +67,7 @@ int main() {
 
 ----
 
-#### 1B. Write a complete C program to illustrate passing and returning structures to and from
-functions through pointers by to defining a structure FRACTION with numerator and
-denominator (integers) as its data members. Write the functions with following
-prototypes. Use type defined structure.
+### 1B. Write a complete C program to illustrate passing and returning structures to and from functions through pointers by to defining a structure FRACTION with numerator and denominator (integers) as its data members. Write the functions with following prototypes. Use type defined structure.
 ```
 void getFr(FRACTION * );
 void printFr( FRACTION *) ;
