@@ -170,3 +170,314 @@ foo(2, 4) calls foo(1, 6)
 foo(1, 6) calls foo(0, 7)
 foo(0, 7) returns 7 (base case)
 So, the final result is 7.
+
+
+### 2A. Write a complete C program to perform the following operations on a queue of integers using only standard queue operations,
+```
+i) Insertq(x): Add an item x to queue.
+ii) Deleteq() : Remove an item from queue.
+iii) Display(): Displaying queue elements
+iv) Reverse() : Contents of queue are reversed using only standard queue operations.
+```
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_SIZE 100
+
+// Define structure for a queue
+typedef struct {
+    int data[MAX_SIZE];
+    int front;
+    int rear;
+} Queue;
+
+// Function to initialize an empty queue
+void initializeQueue(Queue *q) {
+    q->front = -1;
+    q->rear = -1;
+}
+
+// Function to check if the queue is empty
+int isEmpty(Queue *q) {
+    return q->front == -1;
+}
+
+// Function to check if the queue is full
+int isFull(Queue *q) {
+    return (q->rear + 1) % MAX_SIZE == q->front;
+}
+
+// Function to insert an item into the queue
+void insertq(Queue *q, int x) {
+    if (isFull(q)) {
+        printf("Queue is full. Cannot insert %d.\n", x);
+    } else {
+        if (isEmpty(q)) {
+            q->front = 0; // Adjust front if the queue is initially empty
+        }
+        q->rear = (q->rear + 1) % MAX_SIZE;
+        q->data[q->rear] = x;
+        printf("%d inserted into the queue.\n", x);
+    }
+}
+
+// Function to delete an item from the queue
+void deleteq(Queue *q) {
+    if (isEmpty(q)) {
+        printf("Queue is empty. Cannot delete.\n");
+    } else {
+        int deletedItem = q->data[q->front];
+        if (q->front == q->rear) {
+            // If there was only one element, reset front and rear
+            q->front = -1;
+            q->rear = -1;
+        } else {
+            // Move front to the next element in the queue
+            q->front = (q->front + 1) % MAX_SIZE;
+        }
+        printf("%d deleted from the queue.\n", deletedItem);
+    }
+}
+
+// Function to display the contents of the queue
+void display(Queue *q) {
+    if (isEmpty(q)) {
+        printf("Queue is empty.\n");
+    } else {
+        printf("Queue elements: ");
+        int i = q->front;
+        do {
+            printf("%d ", q->data[i]);
+            i = (i + 1) % MAX_SIZE;
+        } while (i != (q->rear + 1) % MAX_SIZE);
+        printf("\n");
+    }
+}
+
+// Function to reverse the contents of the queue
+void reverse(Queue *q) {
+    if (isEmpty(q) || q->front == q->rear) {
+        // Nothing to reverse if the queue is empty or has only one element
+        printf("Queue is empty or has only one element. Cannot reverse.\n");
+    } else {
+        // Reverse by swapping front and rear while traversing the queue
+        int temp;
+        while (q->front < q->rear) {
+            temp = q->data[q->front];
+            q->data[q->front] = q->data[q->rear];
+            q->data[q->rear] = temp;
+            q->front = (q->front + 1) % MAX_SIZE;
+            q->rear = (q->rear - 1 + MAX_SIZE) % MAX_SIZE;
+        }
+        printf("Queue reversed.\n");
+    }
+}
+
+int main() {
+    Queue myQueue;
+    initializeQueue(&myQueue);
+
+    insertq(&myQueue, 10);
+    insertq(&myQueue, 20);
+    insertq(&myQueue, 30);
+    insertq(&myQueue, 40);
+
+    display(&myQueue);
+
+    deleteq(&myQueue);
+
+    display(&myQueue);
+
+    reverse(&myQueue);
+
+    display(&myQueue);
+
+    return 0;
+}
+
+```
+---
+
+### 2B. Write a complete C program to implement push, pop and display operations of a stack using dynamic array to hold 5 integers. If the stack is full when the push operation is called, it must increase the size of the stack by 5 more integers.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define INITIAL_CAPACITY 5
+
+// Define structure for a stack
+typedef struct {
+    int *array;
+    int top;
+    int capacity;
+} Stack;
+
+// Function to initialize an empty stack
+void initializeStack(Stack *stack) {
+    stack->array = (int *)malloc(INITIAL_CAPACITY * sizeof(int));
+    if (stack->array == NULL) {
+        fprintf(stderr, "Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    stack->top = -1;
+    stack->capacity = INITIAL_CAPACITY;
+}
+
+// Function to check if the stack is empty
+int isEmpty(Stack *stack) {
+    return stack->top == -1;
+}
+
+// Function to push an item onto the stack
+void push(Stack *stack, int value) {
+    if (stack->top == stack->capacity - 1) {
+        // Stack is full, need to increase its size
+        stack->capacity += 5;
+        stack->array = (int *)realloc(stack->array, stack->capacity * sizeof(int));
+        if (stack->array == NULL) {
+            fprintf(stderr, "Memory allocation failed.\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+    stack->top++;
+    stack->array[stack->top] = value;
+    printf("%d pushed onto the stack.\n", value);
+}
+
+// Function to pop an item from the stack
+void pop(Stack *stack) {
+    if (isEmpty(stack)) {
+        printf("Stack is empty. Cannot pop.\n");
+    } else {
+        printf("%d popped from the stack.\n", stack->array[stack->top]);
+        stack->top--;
+    }
+}
+
+// Function to display the contents of the stack
+void display(Stack *stack) {
+    if (isEmpty(stack)) {
+        printf("Stack is empty.\n");
+    } else {
+        printf("Stack elements: ");
+        for (int i = 0; i <= stack->top; i++) {
+            printf("%d ", stack->array[i]);
+        }
+        printf("\n");
+    }
+}
+
+// Function to deallocate memory used by the stack
+void deallocateStack(Stack *stack) {
+    free(stack->array);
+}
+
+int main() {
+    Stack myStack;
+    initializeStack(&myStack);
+
+    push(&myStack, 10);
+    push(&myStack, 20);
+    push(&myStack, 30);
+    push(&myStack, 40);
+    push(&myStack, 50);
+
+    display(&myStack);
+
+    push(&myStack, 60);
+    push(&myStack, 70);
+    push(&myStack, 80);
+
+    display(&myStack);
+
+    pop(&myStack);
+
+    display(&myStack);
+
+    // Deallocate memory used by the stack
+    deallocateStack(&myStack);
+
+    return 0;
+}
+
+
+```
+
+---
+
+### 3A. Write a function to add two polynomials, polynomial A, and polynomial B, represented as singly linked lists. The function should accept pointers to linked lists representing two polynomials and return a pointer to the linked list representing the sum.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define structure for a node in the linked list representing a term in a polynomial
+typedef struct Node {
+    int coefficient;
+    int exponent;
+    struct Node* next;
+} Node;
+
+// Function to add two polynomials represented as linked lists
+Node* addPolynomials(Node* polyA, Node* polyB) {
+    Node* result = NULL; // Resultant polynomial
+    Node* tail = NULL;   // Pointer to the last node in the result polynomial
+
+    while (polyA != NULL || polyB != NULL) {
+        // Create a new node for the result
+        Node* newNode = (Node*)malloc(sizeof(Node));
+        if (newNode == NULL) {
+            fprintf(stderr, "Memory allocation failed.\n");
+            exit(EXIT_FAILURE);
+        }
+        newNode->next = NULL;
+
+        // Add the terms of polynomial A and B
+        if (polyA == NULL) {
+            newNode->coefficient = polyB->coefficient;
+            newNode->exponent = polyB->exponent;
+            polyB = polyB->next;
+        } else if (polyB == NULL) {
+            newNode->coefficient = polyA->coefficient;
+            newNode->exponent = polyA->exponent;
+            polyA = polyA->next;
+        } else {
+            // Both polynomials have terms
+            if (polyA->exponent > polyB->exponent) {
+                newNode->coefficient = polyA->coefficient;
+                newNode->exponent = polyA->exponent;
+                polyA = polyA->next;
+            } else if (polyA->exponent < polyB->exponent) {
+                newNode->coefficient = polyB->coefficient;
+                newNode->exponent = polyB->exponent;
+                polyB = polyB->next;
+            } else {
+                // Exponents are equal, add coefficients
+                newNode->coefficient = polyA->coefficient + polyB->coefficient;
+                newNode->exponent = polyA->exponent;
+                polyA = polyA->next;
+                polyB = polyB->next;
+            }
+        }
+
+        // Append the new node to the result polynomial
+        if (result == NULL) {
+            result = newNode;
+            tail = result;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    return result;
+}
+
+```
+
+---
+
+###
