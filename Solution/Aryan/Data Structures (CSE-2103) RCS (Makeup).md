@@ -940,69 +940,38 @@ So, the postorder traversal sequence of the constructed tree is 80, 88, 179, 150
 
 ### 5B Define B-tree of order m and also mention its properties. What do you mean by 2-3-4 tree, explain with an example?
 
-B-Tree of Order m:
-A B-tree of order m is a self-balancing tree data structure that maintains sorted data and allows searches, insertions, and deletions in logarithmic time. In a B-tree of order  m, each internal node can have a variable number of keys, typically ranging from m/2
-
-m/2 to m−1
-m−1, and each internal node has 1
-1 more child than the number of keys it contains.
-
-Properties of a B-Tree:
-Degree and Keys:
-
-Each internal node can have at most m−1 m−1 keys.
-Each internal node can have at most m children.
-Each internal node, except for the root, must have at least m/2 m/2 children.
-Keys and Values:
-
-Keys in a node are stored in sorted order.
-The keys of a node divide its children into ranges, with the leftmost child having keys less than the leftmost key, and so on.
-Leaf Nodes:
-
-All leaf nodes are at the same level, providing a balanced structure.
-Root Node:
-
-The root node can have as few as 1 key.
-Search, Insertion, and Deletion:
-
-Search, insertion, and deletion operations are efficient with logarithmic time complexity.
-
-#### 2-3-4 Tree:
-
-A 2-3-4 tree is a specific type of B-tree of order 
-
-m = 4
-
-m=4, where each internal node can have 2, 3, or 4 children. It is a balanced search tree that maintains sorted data and has the following properties:
-
-Nodes:
-
-Each internal node can have 2, 3, or 4 children.
-Leaf nodes contain data and have no children.
-Keys:
-
-Internal nodes can have 1, 2, or 3 keys.
-Balanced Structure:
-
-All leaf nodes are at the same level, providing a balanced structure.
-Search and Insertion:
-
-Search and insertion operations are efficient with logarithmic time complexity.
-Example of a 2-3-4 Tree:
-Consider the following 2-3-4 tree:
 
 ```
-                [40, 80]
-              /       |        \
-       [20]    [60]     [100, 120]
-      /   \    /  \     /    |    \
-  [10] [30] [50] [70] [90] [110] [130]
+### B tree 
+B-tree of Order m:
+A B-tree of order m is a self-balancing search tree where each node can have between (m/2) and m children. The keys within a node are stored in sorted order, and the keys act as separators for the ranges of values in the subtrees. B-trees are commonly used in databases and file systems.
+
+Properties of a B-tree:
+1. Balanced Structure: All leaf nodes are at the same level, ensuring balance.
+2. Sorted Keys: Keys within each node are stored in sorted order.
+3. Flexible Node Size: Variable number of keys in each node.
+4. Efficient for Disk Access: Minimizes disk I/O operations.
+```
 
 ```
-#### In this 2-3-4 tree:
+### 2-3-4 tree 
+A 2-3-4 tree is a type of self-balancing search tree data structure where each internal node can have 2, 3, or 4 children. The numbers in the name represent the possible number of children each internal node can have. This tree structure is designed to maintain balance during insertions and deletions, ensuring efficient search operations.
 
-Each internal node can have 2, 3, or 4 children.
-Leaf nodes contain the actual data.
-The tree is balanced, and all leaf nodes are at the same level.
-Search and insertion operations are efficient.
+```
+---
 
+### Given input list (26, 5, 77, 1, 61, 11, 59, 15, 48, 19). Show the working of merge sort by showing the contents of the array after each pass.
+
+Input List: [26, 5, 77, 1, 61, 11, 59, 15, 48, 19]
+
+Pass 1:
+[5, 26] [1, 77] [11, 61] [15, 59] [19, 48]
+
+Pass 2:
+[1, 5, 26, 77] [11, 15, 59, 61] [19, 48]
+
+Pass 3:
+[1, 5, 11, 15, 26, 59, 61, 77] [19, 48]
+
+Pass 4:
+[1, 5, 11, 15, 19, 26, 48, 59, 61, 77]
