@@ -1,5 +1,7 @@
 ### 1A. Explain different dynamic memory allocation and de-allocation functions with prototype and example to each.
 
+Dynamic memory allocation and deallocation in C and C++ are typically handled using functions from the standard library, such as malloc, calloc, realloc, and free. Here's an explanation of each, along with their prototypes and examples:
+
 **1. malloc:**
    - **Prototype:** `void *malloc(size_t size);`
    - **Explanation:** Allocates a block of memory of the specified size in bytes.
