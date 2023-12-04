@@ -1,3 +1,61 @@
+### 1A Write a recursive program that finds quotient when a is divided by b where a and b both are positive integers. Draw the call tree for invoking the call quotient (8, 2). With an example, identify conditions under which recursion is to be avoided?
+
+```c
+#include <stdio.h>
+
+int quotient(int a, int b) {
+    // Base case: when b is greater than a
+    if (a < b) {
+        return 0;
+    }
+
+    // Recursive case
+    return 1 + quotient(a - b, b);
+}
+
+int main() {
+    int a = 8, b = 2;
+
+    // Find and print the quotient
+    printf("Quotient of %d divided by %d is: %d\n", a, b, quotient(a, b));
+
+    return 0;
+}
+
+```
+This program defines a recursive function quotient that calculates the quotient when a is divided by b.
+
+Now, let's draw the call tree for invoking the call quotient(8, 2):
+
+```
+                      quotient(8, 2)
+                       /           \
+         quotient(6, 2)            1
+          /         \
+quotient(4, 2)      1
+ /         \
+2           1
+
+```
+The call tree shows how the recursive calls are made until the base case is reached, and then the values are returned back up the tree.
+
+Now, let's discuss conditions under which recursion should be avoided:
+
+Excessive Memory Usage: Recursive solutions may lead to excessive memory usage due to the overhead of function calls and maintaining the call stack. In some cases, an iterative solution might be more memory-efficient.
+
+Stack Overflow: Excessive recursion without proper base cases can lead to a stack overflow. It's important to ensure that the recursion depth is within the system's limits.
+
+Time Complexity: Recursive solutions might not always be the most time-efficient. Some problems can be solved more efficiently using iterative approaches or dynamic programming.
+
+Readability and Maintainability: In some cases, recursive solutions may be less readable or harder to maintain compared to iterative solutions. It's essential to strike a balance between readability and performance.
+
+Tail Call Optimization (TCO) Support: Some programming languages and compilers may not optimize tail recursion, leading to unnecessary stack usage. In such cases, iterative solutions might be preferred.
+
+In summary, while recursion is a powerful and elegant programming technique, it's essential to consider factors such as memory usage, stack depth, time complexity, and readability when deciding whether to use recursion or not.
+
+---
+
+
 ### 1B Design functions to implement the following operations in dynamic memory allocation.
 i) Return the pointer after allocating memory for M pointers and N data
 locations
